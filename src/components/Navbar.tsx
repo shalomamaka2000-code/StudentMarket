@@ -24,18 +24,10 @@ const Navbar: React.FC = () => {
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
           <Home size={24} />
-          <span>HostelMarket</span>
+          <span>StudentMarket</span>
         </Link>
-
-        <div className="navbar-search">
-          <Search size={18} className="search-icon" />
-          <input 
-            type="text" 
-            placeholder="Search for items..." 
-            className="search-input"
-          />
-        </div>
-
+        
+ {/* Links now spread evenly — add a wrapper <nav> */}
         <div className="navbar-links">
           <Link to="/products" className="nav-link">
             <Store size={20} />
