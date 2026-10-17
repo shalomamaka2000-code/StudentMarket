@@ -42,7 +42,7 @@ const Login: React.FC = () => {
             <Home size={32} />
           </div>
           <h1 className="cozy-headline">Welcome Back!</h1>
-          <p className="auth-subtitle">Your cozy hostel marketplace awaits</p>
+          <p className="auth-subtitle">Your one-stop marketplace for your convenience</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">

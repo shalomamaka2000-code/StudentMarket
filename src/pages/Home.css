@@ -81,3 +81,142 @@
   animation: float 6s ease-in-out infinite;
 }
 
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+  align-items: stretch;   /* all cards same height */
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  height: 100%;           /* fills the grid cell */
+}
+
+/* ---------- Categories section ---------- */
+.categories-section {
+  margin-top: 3rem;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-subtitle {
+  color: var(--cozy-brown);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+/* The card IS a button — reset default button styles */
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 1.5rem 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  border: 1px solid var(--cozy-beige);
+  background: var(--cozy-warm-white);
+  border-radius: 16px;
+  height: 100%;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+/* Reuse the hover feel from .cozy-card but tint to nude */
+.category-card:hover {
+  transform: translateY(-4px);
+  background: #EBDAC4;
+  box-shadow:
+    0 12px 24px rgba(139, 115, 85, 0.15),
+    0 4px 8px rgba(139, 115, 85, 0.1),
+    inset 0 0 0 1px rgba(198, 123, 92, 0.15);
+}
+
+.category-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(198, 123, 92, 0.12);
+  color: var(--cozy-terracotta);
+  margin-bottom: 0.25rem;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.category-card:hover .category-icon {
+  background: var(--cozy-terracotta);
+  color: var(--cozy-warm-white);
+}
+
+.category-label {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--cozy-dark-brown);
+  margin: 0;
+}
+
+.category-desc {
+  font-size: 0.85rem;
+  color: var(--cozy-brown);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.category-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cozy-terracotta);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.category-card:hover .category-cta {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .categories-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .category-card {
+    padding: 1.25rem 1rem;
+  }
+
+  .category-label {
+    font-size: 0.95rem;
+  }
+}
