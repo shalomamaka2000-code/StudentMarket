@@ -1,0 +1,83 @@
+.home-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.hero {
+  position: relative;
+  padding: 4rem 0 5rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: var(--cozy-beige);
+  color: var(--cozy-brown);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  font-size: 3rem;
+  line-height: 1.15;
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--cozy-brown);
+  margin: 1rem 0 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.decor-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(198, 123, 92, 0.08);
+}
+
+.circle-1 {
+  width: 300px;
+  height: 300px;
+  top: -80px;
+  left: -80px;
+}
+
+.circle-2 {
+  width: 400px;
+  height: 400px;
+  bottom: -120px;
+  right: -120px;
+  background: rgba(156, 175, 136, 0.08);
+}
+
+.decor-emoji {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.2;
+  animation: float 6s ease-in-out infinite;
+}
+

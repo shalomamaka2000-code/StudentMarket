@@ -1,0 +1,175 @@
+:root {
+  --cozy-cream: #FDF6E3;
+  --cozy-beige: #F5E6D3;
+  --cozy-brown: #8B7355;
+  --cozy-dark-brown: #5C4033;
+  --cozy-terracotta: #C67B5C;
+  --cozy-sage: #9CAF88;
+  --cozy-warm-white: #FFF9F0;
+  --cozy-shadow: rgba(139, 115, 85, 0.15);
+  --cozy-shadow-hover: rgba(139, 115, 85, 0.25);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background-color: var(--cozy-cream);
+  color: var(--cozy-dark-brown);
+  line-height: 1.6;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 80px;
+}
+
+/* Cozy Headline Shadow Effect */
+.cozy-headline {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--cozy-dark-brown);
+  text-shadow: 
+    2px 2px 4px var(--cozy-shadow),
+    0 0 20px rgba(253, 246, 227, 0.8);
+  letter-spacing: 0.5px;
+  margin-bottom: 1.5rem;
+}
+
+.cozy-subheadline {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--cozy-brown);
+  text-shadow: 
+    1px 1px 3px var(--cozy-shadow),
+    0 0 15px rgba(253, 246, 227, 0.6);
+  margin-bottom: 1rem;
+}
+
+/* Cozy Card Styles */
+.cozy-card {
+  background: var(--cozy-warm-white);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 
+    0 4px 6px var(--cozy-shadow),
+    0 1px 3px var(--cozy-shadow);
+  border: 1px solid var(--cozy-beige);
+  transition: all 0.3s ease;
+}
+
+.cozy-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 24px var(--cozy-shadow-hover),
+    0 4px 8px var(--cozy-shadow);
+}
+
+/* Cozy Button */
+.cozy-btn {
+  background: linear-gradient(135deg, var(--cozy-terracotta), var(--cozy-brown));
+  color: var(--cozy-warm-white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px var(--cozy-shadow);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cozy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--cozy-shadow-hover);
+  filter: brightness(1.05);
+}
+
+.cozy-btn:active {
+  transform: translateY(0);
+}
+
+.cozy-btn-outline {
+  background: transparent;
+  border: 2px solid var(--cozy-terracotta);
+  color: var(--cozy-terracotta);
+}
+
+.cozy-btn-outline:hover {
+  background: var(--cozy-terracotta);
+  color: var(--cozy-warm-white);
+}
+
+/* Input Styles */
+.cozy-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--cozy-beige);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--cozy-dark-brown);
+  background: var(--cozy-warm-white);
+  transition: all 0.3s ease;
+}
+
+.cozy-input:focus {
+  outline: none;
+  border-color: var(--cozy-terracotta);
+  box-shadow: 0 0 0 3px rgba(198, 123, 92, 0.1);
+}
+
+.cozy-input::placeholder {
+  color: var(--cozy-brown);
+  opacity: 0.6;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cozy-headline {
+    font-size: 1.75rem;
+  }
+  
+  .cozy-subheadline {
+    font-size: 1.25rem;
+  }
+}
