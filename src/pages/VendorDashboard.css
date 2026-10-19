@@ -1,0 +1,135 @@
+/* ============================================
+   Vendor Dashboard — cozy product manager
+   ============================================ */
+
+.vendor-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.vendor-page .cozy-headline {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* ---------- Add-product form ---------- */
+.vendor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.vendor-form .cozy-subheadline {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.vendor-form textarea.cozy-input {
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.vendor-form select.cozy-input {
+  cursor: pointer;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--cozy-brown) 50%),
+                    linear-gradient(135deg, var(--cozy-brown) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 2.5rem;
+}
+
+.vendor-form .cozy-btn {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+}
+
+/* ---------- Product list ---------- */
+.vendor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.vendor-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+}
+
+.vendor-row > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.vendor-row strong {
+  color: var(--cozy-dark-brown);
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vendor-row span {
+  color: var(--cozy-brown);
+  font-size: 0.8rem;
+}
+
+.vendor-row .remove-btn {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--cozy-beige);
+  background: var(--cozy-warm-white);
+  color: var(--cozy-brown);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.vendor-row .remove-btn:hover {
+  background: #EBDAC4;
+  color: var(--cozy-terracotta);
+  border-color: var(--cozy-terracotta);
+  transform: scale(1.05);
+}
+
+/* ---------- Empty list ---------- */
+.vendor-list:empty::before {
+  content: 'No products yet — add your first item above ☝️';
+  display: block;
+  text-align: center;
+  padding: 2rem;
+  color: var(--cozy-brown);
+  opacity: 0.6;
+  font-style: italic;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .vendor-page {
+    padding: 1rem;
+  }
+
+  .vendor-form {
+    padding: 1.25rem;
+  }
+
+  .vendor-row {
+    padding: 0.85rem 1rem;
+  }
+}

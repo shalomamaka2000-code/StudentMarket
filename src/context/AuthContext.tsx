@@ -10,7 +10,7 @@ export interface User {
   email: string;
   role: Role;
   hostel?: string;
-  roomNumber?: string;
+  roomNumber?: number;
   regNumber?: string;
 }
 
@@ -20,7 +20,7 @@ export interface SignupData {
   password: string;
   regNumber?: string;
   hostel?: string;
-  roomNumber?: string;
+  roomNumber?: number;
   role?: 'customer' | 'vendor';
 }
 

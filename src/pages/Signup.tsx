@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { User, Mail, Lock, Home, DoorOpen, ArrowRight } from 'lucide-react';
 import { useAuth, type SignupData } from '../context/AuthContext';
 import toast from 'react-hot-toast';

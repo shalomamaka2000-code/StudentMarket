@@ -1,0 +1,117 @@
+/* ============================================
+   Admin Dashboard — cozy oversight panel
+   ============================================ */
+
+.admin-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.admin-page .cozy-headline {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* ---------- Table ---------- */
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+  padding: 0.5rem;
+  overflow: hidden;
+}
+
+.admin-table thead th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--cozy-sage);
+  font-weight: 700;
+  border-bottom: 2px solid var(--cozy-beige);
+}
+
+.admin-table tbody tr {
+  background: var(--cozy-warm-white);
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.admin-table tbody tr:hover {
+  background: #EBDAC4;
+}
+
+.admin-table tbody td {
+  padding: 0.9rem 1rem;
+  font-size: 0.9rem;
+  color: var(--cozy-dark-brown);
+  border-bottom: 1px solid var(--cozy-beige);
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table td:last-child {
+  text-align: right;
+}
+
+.admin-table .cozy-btn {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  border-radius: 999px;
+}
+
+/* ---------- Status chips (optional) ---------- */
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.status-chip.active {
+  background: rgba(156, 175, 136, 0.2);
+  color: #5a7a3f;
+}
+
+.status-chip.suspended {
+  background: rgba(198, 123, 92, 0.18);
+  color: var(--cozy-terracotta);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .admin-page {
+    padding: 1rem;
+  }
+
+  .admin-table thead {
+    display: none;
+  }
+
+  .admin-table tbody tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.25rem 0.5rem;
+    padding: 0.75rem;
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+  }
+
+  .admin-table tbody td {
+    padding: 0.2rem 0.4rem;
+    border: none;
+    font-size: 0.85rem;
+  }
+
+  .admin-table td:last-child {
+    grid-column: 1 / -1;
+    text-align: left;
+    margin-top: 0.25rem;
+  }
+}

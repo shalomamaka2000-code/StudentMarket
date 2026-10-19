@@ -1,0 +1,163 @@
+.track-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.track-page .cozy-headline {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.track-id {
+  text-align: center;
+  color: var(--cozy-brown);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.track-id strong {
+  color: var(--cozy-terracotta);
+  letter-spacing: 0.5px;
+  font-family: 'Courier New', monospace;
+}
+
+/* ---------- Progress steps ---------- */
+.track-steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  margin: 2rem 0 3rem;
+  padding: 0 0.5rem;
+}
+
+/* connecting line behind the dots */
+.track-steps::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 6%;
+  right: 6%;
+  height: 3px;
+  background: var(--cozy-beige);
+  border-radius: 2px;
+  z-index: 0;
+}
+
+.track-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 1;
+  color: var(--cozy-brown);
+  opacity: 0.5;
+  font-size: 0.75rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.track-step.done {
+  opacity: 1;
+  color: var(--cozy-dark-brown);
+  font-weight: 700;
+}
+
+/* the dot */
+.track-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 3px solid var(--cozy-beige);
+  background: var(--cozy-warm-white);
+  box-shadow: 0 2px 4px var(--cozy-shadow);
+  transition: all 0.3s ease;
+}
+
+.track-step.done .track-dot {
+  border-color: var(--cozy-terracotta);
+  background: var(--cozy-terracotta);
+  box-shadow:
+    0 0 0 4px rgba(198, 123, 92, 0.15),
+    0 2px 6px rgba(198, 123, 92, 0.3);
+}
+
+/* pulsating effect on the most recent completed step */
+.track-step.done:last-of-type .track-dot {
+  animation: dotPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 4px rgba(198, 123, 92, 0.15),
+      0 2px 6px rgba(198, 123, 92, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 0 10px rgba(198, 123, 92, 0.05),
+      0 2px 6px rgba(198, 123, 92, 0.3);
+  }
+}
+
+/* ---------- Item list card ---------- */
+.track-items {
+  padding: 1.5rem;
+}
+
+.track-items .cozy-subheadline {
+  margin-bottom: 1rem;
+}
+
+.track-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  font-size: 0.9rem;
+  color: var(--cozy-brown);
+  border-bottom: 1px dashed var(--cozy-beige);
+}
+
+.track-item:last-child {
+  border-bottom: none;
+}
+
+.track-item span:last-child {
+  font-weight: 700;
+  color: var(--cozy-terracotta);
+}
+
+/* ---------- Loading/error ---------- */
+.track-page > p {
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--cozy-brown);
+  font-style: italic;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .track-page {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .track-steps {
+    margin: 1.5rem 0 2rem;
+  }
+
+  .track-step {
+    font-size: 0.65rem;
+  }
+
+  .track-step span {
+    max-width: 60px;
+  }
+
+  .track-dot {
+    width: 20px;
+    height: 20px;
+  }
+}
