@@ -25,13 +25,17 @@ const Signup: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    try {
-      await signup(formData);
-      toast.success('Welcome to HostelMarket! 🎉');
-      navigate('/products');
-    } catch {
-      toast.error('Signup failed. Please try again.');
-    } finally {
+   try {
+  await signup(formData);
+  toast.success('Account created successfully!');
+  navigate('/products');
+} catch (err) {
+  if (axios.isAxiosError(err)) {
+    toast.error(err.response?.data?.message ?? 'Signup failed');
+  } else {
+    toast.error('Signup failed');
+  }
+} finally {
       setLoading(false);
     }
   };

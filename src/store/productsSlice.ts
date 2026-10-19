@@ -1,86 +1,124 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
+
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import type {
-  Product,
-  Gender,
-  ApiProduct,
-  ApiProductsResponse,
-} from '../types/product';
+
+import { api } from '../server/src/config/api';
+import type { Product, Gender } from '../types/product';
+
+interface ApiCategory {
+  id: number;
+  name: string;
+}
+
+interface ApiVendor {
+  id: number;
+  businessName: string;
+}
+
+export interface ApiProduct {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  stockQuantity: number;
+  imageUrl?: string | null;
+  active: boolean;
+  createdAt?: string;
+  category: ApiCategory | null;
+  vendor: ApiVendor | null;
+}
 
 interface ProductsState {
   items: Product[];
   loading: boolean;
   error: string | null;
-  selectedProduct: Product | null;
 }
 
 const initialState: ProductsState = {
   items: [],
   loading: false,
   error: null,
-  selectedProduct: null,
 };
 
-const determineGender = (title: string, category: string): Gender => {
-  const lowerTitle = title.toLowerCase();
-  const lowerCategory = category.toLowerCase();
+const determineGender = (
+  title: string,
+  category: string
+): Gender => {
+  const t = title.toLowerCase();
+  const c = category.toLowerCase();
 
-  const isGenderedCategory =
-    lowerCategory.includes('fragrance') || lowerCategory.includes('beauty');
+  if (
+    c.includes('fragrance') ||
+    c.includes('beauty') ||
+    c.includes('fashion')
+  ) {
+    if (t.includes('men') || t.includes('male')) {
+      return 'male';
+    }
 
-  if (isGenderedCategory) {
-    if (lowerTitle.includes('men') || lowerTitle.includes('male')) return 'male';
-    if (lowerTitle.includes('women') || lowerTitle.includes('female')) return 'female';
+    if (t.includes('women') || t.includes('female')) {
+      return 'female';
+    }
   }
 
   return 'unisex';
 };
 
-const mapApiProduct = (item: ApiProduct): Product => ({
-  id: item.id,
-  title: item.title,
-  price: item.price,
-  description: item.description,
-  category: item.category,
-  image: item.thumbnail,
-  rating: item.rating,
-  reviews: item.stock,
-  gender: determineGender(item.title, item.category),
-  inStock: item.stock > 0,
+const mapApiProduct = (p: ApiProduct): Product => ({
+  id: p.id,
+  title: p.name,
+  price: p.price,
+  description: p.description,
+  category: p.category?.name ?? 'Uncategorized',
+  image: p.imageUrl ?? '',
+  rating: 0,
+  reviews: 0,
+  gender: determineGender(
+    p.name,
+    p.category?.name ?? ''
+  ),
+  inStock: p.active && p.stockQuantity > 0,
 });
 
 export const fetchProducts = createAsyncThunk<
   Product[],
   string | undefined,
   { rejectValue: string }
->('products/fetchProducts', async (category, { rejectWithValue }) => {
-  try {
-    const url =
-      category && category !== 'all'
-        ? `https://dummyjson.com/products/category/${category}`
-        : 'https://dummyjson.com/products?limit=100';
+>(
+  'products/fetchProducts',
+  async (category, { rejectWithValue }) => {
+    try {
+      const params =
+        category && category !== 'all'
+          ? { category }
+          : {};
 
-    const response = await axios.get<ApiProductsResponse>(url);
-    return response.data.products.map(mapApiProduct);
-  } catch (err: unknown) {
-    if (axios.isAxiosError(err)) {
-      return rejectWithValue(err.message);
+      const { data } = await api.get<ApiProduct[]>(
+        '/products',
+        { params }
+      );
+
+      return data
+        .filter(product => product.active)
+        .map(mapApiProduct);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(
+          error.response?.data?.message ??
+            error.message ??
+            'Failed to fetch products'
+        );
+      }
+
+      return rejectWithValue('Failed to fetch products');
     }
-    return rejectWithValue('Failed to fetch products');
   }
-});
+);
 
 const productsSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {
-    setSelectedProduct: (state, action: PayloadAction<Product | null>) => {
-      state.selectedProduct = action.payload;
-    },
-    clearError: state => {
-      state.error = null;
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(fetchProducts.pending, state => {
@@ -93,10 +131,10 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload ?? action.error.message ?? 'Unknown error';
+        state.error =
+          action.payload ?? 'Failed to fetch products';
       });
   },
 });
 
-export const { setSelectedProduct, clearError } = productsSlice.actions;
 export default productsSlice.reducer;

@@ -16,14 +16,19 @@ const Login: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await login(email, password);
-      toast.success('Welcome back! 🏠');
-      navigate('/products');
-    } catch {
-      toast.error('Login failed. Please try again.');
-    } finally {
+  await login(email, password);
+  toast.success('Welcome back!');
+  navigate('/products');
+} catch (err) {
+  if (axios.isAxiosError(err)) {
+    toast.error(err.response?.data?.message ?? 'Login failed');
+  } else {
+    toast.error('Login failed');
+  }
+} finally {
       setLoading(false);
-    }
+  }
+
   };
 
   return (
