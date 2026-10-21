@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { api } from '../server/src/config/api';
+import { api } from '../api';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Plus, Trash2 } from 'lucide-react';

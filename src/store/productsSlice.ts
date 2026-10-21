@@ -2,30 +2,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { api } from '../server/src/config/api';
+import { api } from '../api';
 import type { Product, Gender } from '../types/product';
 
-interface ApiCategory {
-  id: number;
-  name: string;
-}
-
-interface ApiVendor {
-  id: number;
-  businessName: string;
-}
-
 export interface ApiProduct {
-  id: number;
-  name: string;
-  description: string;
+  _id: string;
+  title: string;
+  description?: string;
   price: number;
-  stockQuantity: number;
-  imageUrl?: string | null;
-  active: boolean;
+  category: string;
+  image?: string | null;
+  stock: number;
+  vendor: string | { _id: string; name?: string };
+  isHidden: boolean;
   createdAt?: string;
-  category: ApiCategory | null;
-  vendor: ApiVendor | null;
+  updatedAt?: string;
 }
 
 interface ProductsState {
@@ -47,37 +38,32 @@ const determineGender = (
   const t = title.toLowerCase();
   const c = category.toLowerCase();
 
+  if (c.includes('mens-shirts')) return 'male';
+  if (c.includes('womens-dresses')) return 'female';
+
   if (
-    c.includes('fragrance') ||
+    c.includes('fragrances') ||
     c.includes('beauty') ||
     c.includes('fashion')
   ) {
-    if (t.includes('men') || t.includes('male')) {
-      return 'male';
-    }
-
-    if (t.includes('women') || t.includes('female')) {
-      return 'female';
-    }
+    if (t.includes('men') || t.includes('male')) return 'male';
+    if (t.includes('women') || t.includes('female')) return 'female';
   }
 
   return 'unisex';
 };
 
 const mapApiProduct = (p: ApiProduct): Product => ({
-  id: p.id,
-  title: p.name,
+  id: p._id,
+  title: p.title,
   price: p.price,
-  description: p.description,
-  category: p.category?.name ?? 'Uncategorized',
-  image: p.imageUrl ?? '',
+  description: p.description ?? '',
+  category: p.category,
+  image: p.image ?? '',
   rating: 0,
   reviews: 0,
-  gender: determineGender(
-    p.name,
-    p.category?.name ?? ''
-  ),
-  inStock: p.active && p.stockQuantity > 0,
+  gender: determineGender(p.title, p.category),
+  inStock: !p.isHidden && p.stock > 0,
 });
 
 export const fetchProducts = createAsyncThunk<
@@ -93,13 +79,12 @@ export const fetchProducts = createAsyncThunk<
           ? { category }
           : {};
 
-      const { data } = await api.get<ApiProduct[]>(
-        '/products',
-        { params }
-      );
+      const { data } = await api.get<ApiProduct[]>('/products', {
+        params,
+      });
 
       return data
-        .filter(product => product.active)
+        .filter(product => !product.isHidden)
         .map(mapApiProduct);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {

@@ -1,6 +1,6 @@
 // src/pages/AdminDashboard.tsx
 import React, { useEffect, useState } from 'react';
-import { api } from '../server/src/config/api';
+import { api } from '../api';
 import toast from 'react-hot-toast';
 import './AdminDashboard.css';
 

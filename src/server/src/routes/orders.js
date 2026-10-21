@@ -29,10 +29,19 @@ router.post('/', protect, authorize('customer'), async (req, res) => {
     total += product.price * item.quantity;
   }
 
+  if (
+  !Number.isInteger(items.quantity) ||
+  items.quantity < 1
+) {
+  return res.status(400).json({
+    message: 'Each item must have a valid quantity of at least 1.',
+  });
+}
+
   const order = await Order.create({
     customer: req.user._id,
     items: builtItems,
-    total: total + 2.5,
+    total: total + 2500,
     deliveryAddress,
     trackingId: `HM-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`,
   });

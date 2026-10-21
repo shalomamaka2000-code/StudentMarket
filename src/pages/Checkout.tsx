@@ -15,7 +15,7 @@ import toast from 'react-hot-toast';
 import type { AppDispatch, RootState } from '../store';
 import { clearCart } from '../store/cartSlice';
 import { useAuth } from '../context/AuthContext';
-import { api } from '../server/src/config/api';
+import { api } from '../api';
 
 import './Checkout.css';
 
@@ -86,16 +86,20 @@ const Checkout: React.FC = () => {
 
       // The backend should obtain the authenticated user
       // and their cart from the server-side session/JWT.
-      const { data } = await api.post('/orders', {
-        shippingAddress,
-      });
+    const { data } = await api.post('/orders', {
+  items: items.map(item => ({
+    product: item.id,
+    quantity: item.quantity,
+  })),
+  deliveryAddress: shippingAddress,
+});
 
       // Clear the cart only after the backend accepts the order.
       dispatch(clearCart());
 
       toast.success('Order placed successfully!');
 
-      const orderId = data?.id ?? data?.orderId;
+    const orderId = data?._id ?? data?.id ?? data?.orderId;
 
       if (orderId != null) {
         navigate(`/orders/${orderId}`);

@@ -51,11 +51,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <Link to={`/product/${product.id}`} className="product-card cozy-card">
       <div className="product-image-wrapper">
-        <img
-          src={product.image}
+      <img
+          src={product.image || '/images/product-fallback.png'}
           alt={product.title}
           className="product-image"
           loading="lazy"
+          onError={(e) => {
+          e.currentTarget.onerror = null;
+          e.currentTarget.src = '/images/product-fallback.png';
+          }}
         />
         <button
           type="button"
@@ -79,7 +83,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         <div className="product-footer">
-          <span className="product-price">${product.price.toFixed(2)}</span>
+        <span className="product-price">
+          {new Intl.NumberFormat('en-NG', {
+            style: 'currency',
+          currency: 'NGN',
+          maximumFractionDigits: 0,
+          }).format(product.price)}
+        </span>
           <button
             type="button"
             className="cozy-btn add-btn"

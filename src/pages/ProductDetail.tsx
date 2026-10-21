@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import type { AppDispatch, RootState } from '../store';
 import { addToCart } from '../store/cartSlice';
 import { toggleWishlist } from '../store/wishlistSlice';
-import { api } from '../server/src/config/api';
+import { api } from '../api';
 
 import './ProductDetail.css';
 

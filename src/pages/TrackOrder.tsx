@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { api } from '../server/src/config/api';
+import { api } from '../api';
 import axios from 'axios';
 import './TrackOrder.css';
 

@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Trash2, Minus, Plus, ShoppingBag, ArrowRight } from 'lucide-react';
+import {
+  Trash2,
+  Minus,
+  Plus,
+  ShoppingBag,
+  ArrowRight,
+} from 'lucide-react';
 import type { AppDispatch, RootState } from '../store';
 import {
   removeFromCart,
@@ -11,12 +17,22 @@ import {
 import toast from 'react-hot-toast';
 import './Cart.css';
 
-const DELIVERY_FEE = 2.5;
+const DELIVERY_FEE = 2500;
+
+const formatNaira = (amount: number): string =>
+  new Intl.NumberFormat('en-NG', {
+    style: 'currency',
+    currency: 'NGN',
+    maximumFractionDigits: 0,
+  }).format(amount);
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { items, total } = useSelector((state: RootState) => state.cart);
+
+  const { items, total } = useSelector(
+    (state: RootState) => state.cart
+  );
 
   const handleRemove = (id: number, title: string) => {
     dispatch(removeFromCart(id));
@@ -55,7 +71,11 @@ const Cart: React.FC = () => {
     <div className="cart-page">
       <div className="cart-header">
         <h1 className="cozy-headline">Your Cart</h1>
-        <button type="button" className="clear-btn" onClick={handleClear}>
+        <button
+          type="button"
+          className="clear-btn"
+          onClick={handleClear}
+        >
           Clear all
         </button>
       </div>
@@ -69,11 +89,14 @@ const Cart: React.FC = () => {
                 alt={item.title}
                 className="cart-item-image"
               />
+
               <div className="cart-item-info">
-                <span className="product-category">{item.category}</span>
+                <span className="product-category">
+                  {item.category}
+                </span>
                 <h3 className="cart-item-title">{item.title}</h3>
                 <span className="cart-item-price">
-                  ${item.price.toFixed(2)}
+                  {formatNaira(item.price)}
                 </span>
               </div>
 
@@ -81,15 +104,21 @@ const Cart: React.FC = () => {
                 <div className="qty-controls">
                   <button
                     type="button"
-                    onClick={() => handleQuantity(item.id, item.quantity - 1)}
+                    onClick={() =>
+                      handleQuantity(item.id, item.quantity - 1)
+                    }
                     aria-label="Decrease quantity"
                   >
                     <Minus size={14} />
                   </button>
+
                   <span className="qty-value">{item.quantity}</span>
+
                   <button
                     type="button"
-                    onClick={() => handleQuantity(item.id, item.quantity + 1)}
+                    onClick={() =>
+                      handleQuantity(item.id, item.quantity + 1)
+                    }
                     aria-label="Increase quantity"
                   >
                     <Plus size={14} />
@@ -97,7 +126,7 @@ const Cart: React.FC = () => {
                 </div>
 
                 <span className="cart-item-subtotal">
-                  ${(item.price * item.quantity).toFixed(2)}
+                  {formatNaira(item.price * item.quantity)}
                 </span>
 
                 <button
@@ -118,15 +147,17 @@ const Cart: React.FC = () => {
 
           <div className="summary-row">
             <span>Subtotal</span>
-            <span>${total.toFixed(2)}</span>
+            <span>{formatNaira(total)}</span>
           </div>
+
           <div className="summary-row">
             <span>Hostel delivery</span>
-            <span>${DELIVERY_FEE.toFixed(2)}</span>
+            <span>{formatNaira(DELIVERY_FEE)}</span>
           </div>
+
           <div className="summary-row total">
             <span>Total</span>
-            <span>${grandTotal.toFixed(2)}</span>
+            <span>{formatNaira(grandTotal)}</span>
           </div>
 
           <button

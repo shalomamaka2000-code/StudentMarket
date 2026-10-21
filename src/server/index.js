@@ -2,14 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
-const connectDB = require('./config/db');
-const { initSocket } = require('./socket');
+const connectDB = require('./src/config/db');
+const { initSocket } = require('./src/socket');
 
-const authRoutes = require('./routes/auth');
-const productRoutes = require('./routes/products');
-const orderRoutes = require('./routes/orders');
-const chatRoutes = require('./routes/chat');
-const adminRoutes = require('./routes/admin');
+const authRoutes = require('./src/routes/auth');
+const productRoutes = require('./src/routes/products');
+const orderRoutes = require('./src/routes/orders');
+const chatRoutes = require('./src/routes/chat');
+const adminRoutes = require('./src/routes/admin');
 
 const app = express();
 const server = http.createServer(app);

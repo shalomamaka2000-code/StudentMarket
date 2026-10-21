@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useState, type ReactNode } from 'react';
-import { api } from '../server/src/config/api';
+import { api } from '../api';
 
 export type Role = 'customer' | 'vendor' | 'admin';
 
