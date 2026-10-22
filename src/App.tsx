@@ -14,6 +14,7 @@ import Wishlist from './pages/Wishlist';
 import Checkout from './pages/Checkout';
 import ProtectedRoute from './components/ProtectedRoute';
 import TrackOrder from './pages/TrackOrder';
+import MyOrders from './pages/MyOrders';
 import './App.css';
 import RoleRoute from './components/RoleRoute';
 import VendorDashboard from './pages/VendorDashboard';
@@ -41,6 +42,7 @@ function App() {
   <Route path="/chat/:peerId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
   <Route path="/vendor" element={<RoleRoute roles={['vendor']}><VendorDashboard /></RoleRoute>} />
   <Route path="/admin" element={<RoleRoute roles={['admin']}><AdminDashboard /></RoleRoute>} />
+  <Route path="/orders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
 </Routes>
             </main>
             <Toaster 
