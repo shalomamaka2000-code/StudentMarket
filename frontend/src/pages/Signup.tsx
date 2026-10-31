@@ -6,6 +6,7 @@ import { useAuth, type SignupData } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import './Auth.css';
 
+
 const Signup: React.FC = () => {
   const navigate = useNavigate();
   const { signup } = useAuth();
@@ -14,9 +15,10 @@ const Signup: React.FC = () => {
     email: '',
     password: '',
     hostel: '',
-    roomNumber: '',
+    roomNumber: 0,
   });
   const [loading, setLoading] = useState(false);
+  const [role, setRole] = useState<'customer' | 'vendor'>('customer');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -27,7 +29,10 @@ const Signup: React.FC = () => {
     e.preventDefault();
     setLoading(true);
    try {
-  await signup(formData);
+ await signup({
+  ...formData,
+  role,
+});
   toast.success('Account created successfully!');
   navigate('/products');
 } catch (err) {
@@ -51,6 +56,7 @@ const Signup: React.FC = () => {
         <div className="floating-item">🛏️</div>
       </div>
 
+
       <div className="auth-card cozy-card signup-card">
         <div className="auth-header">
           <div className="auth-icon">
@@ -62,6 +68,19 @@ const Signup: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="auth-form">
           {/* name, email, password fields — same pattern as before */}
+          <div className="form-group">
+  <label htmlFor="role">Account Type</label>
+  <select
+    id="role"
+    value={role}
+    onChange={(e) =>
+      setRole(e.target.value as 'customer' | 'vendor')
+    }
+  >
+    <option value="customer">Customer</option>
+    <option value="vendor">Vendor</option>
+  </select>
+</div>
           <div className="input-group">
             <label htmlFor="name">Full Name</label>
             <div className="input-wrapper">

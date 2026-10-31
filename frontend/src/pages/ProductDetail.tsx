@@ -149,11 +149,12 @@ setProduct({
     // Adjust this payload if your cartSlice expects another shape.
     dispatch(
       addToCart({
-        _id: product.id,
+        id: product.id,
         title: product.title,
         price: product.price,
         image: product.image,
         quantity,
+        category: product.category,
       })
     );
 

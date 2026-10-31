@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { ShoppingCart, Heart, Home, Store, LogOut, User, Search } from 'lucide-react';
+import { ShoppingCart, Heart, Home, Store, LogOut, User } from 'lucide-react';
 import { type RootState } from '../store';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';

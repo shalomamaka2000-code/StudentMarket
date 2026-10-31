@@ -24,7 +24,7 @@ type Step = 'delivery' | 'payment' | 'confirm';
 interface DeliveryInfo {
   name: string;
   hostel: string;
-  roomNumber: string;
+  roomNumber: number;
   phone: string;
 }
 
@@ -45,7 +45,7 @@ const Checkout: React.FC = () => {
   const [delivery, setDelivery] = useState<DeliveryInfo>({
     name: user?.name ?? '',
     hostel: user?.hostel ?? '',
-    roomNumber: user?.roomNumber ?? '',
+    roomNumber: user?.roomNumber ?? 0 ,
     phone: '',
   });
 
@@ -63,16 +63,17 @@ const Checkout: React.FC = () => {
       return;
     }
 
-    if (
-      !delivery.name.trim() ||
-      !delivery.hostel.trim() ||
-      !delivery.roomNumber.trim() ||
-      !delivery.phone.trim()
-    ) {
-      toast.error('Please complete all delivery details.');
-      setStep('delivery');
-      return;
-    }
+   if (
+  !delivery.name.trim() ||
+  !delivery.hostel.trim() ||
+  !Number.isFinite(delivery.roomNumber) ||
+  delivery.roomNumber <= 0 ||
+  !delivery.phone.trim()
+) {
+  toast.error('Please complete all delivery details.');
+  setStep('delivery');
+  return;
+}
 
     setProcessing(true);
 
@@ -80,7 +81,7 @@ const Checkout: React.FC = () => {
       const shippingAddress = [
         delivery.name.trim(),
         delivery.hostel.trim(),
-        `Room ${delivery.roomNumber.trim()}`,
+        `Room ${delivery.roomNumber}`,
         `Phone: ${delivery.phone.trim()}`,
       ].join(', ');
 
@@ -240,7 +241,7 @@ const Checkout: React.FC = () => {
                     onChange={event =>
                       setDelivery(current => ({
                         ...current,
-                        roomNumber: event.target.value,
+                        roomNumber: Number(event.target.value),
                       }))
                     }
                     required

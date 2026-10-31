@@ -65,7 +65,22 @@ const Products: React.FC = () => {
 
   return (
     <div className="products-page">
-      {/* ...header & search unchanged... */}
+      <div className="products-header">
+  <div>
+    <h1>Explore Products</h1>
+    <p>Find something you'd love to keep.</p>
+  </div>
+
+  <div className="products-search">
+    <Search size={20} />
+    <input
+      type="text"
+      placeholder="Search products..."
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+    />
+  </div>
+</div>
 
       <div className="category-tabs">
         {CATEGORIES.map(cat => (

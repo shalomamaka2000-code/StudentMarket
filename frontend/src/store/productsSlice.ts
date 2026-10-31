@@ -6,7 +6,7 @@ import { api } from '../api';
 import type { Product, Gender } from '../types/product';
 
 export interface ApiProduct {
-  id: string;
+  id: number;
   title: string;
   description?: string;
   price: number;
@@ -54,7 +54,7 @@ const determineGender = (
 };
 
 const mapApiProduct = (p: ApiProduct): Product => ({
-  id: p._id,
+  id: p.id,
   title: p.title,
   price: p.price,
   description: p.description ?? '',
