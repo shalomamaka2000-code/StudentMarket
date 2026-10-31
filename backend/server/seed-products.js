@@ -89,37 +89,51 @@ const products = [
 
 async function seedProducts() {
   try {
-    if (!process.env.MONGO_URI) {
-      throw new Error('MONGO_URI is missing from your .env file.');
+    const mongoUri = process.env.MONGO_URI_ATLAS || process.env.MONGO_URI;
+
+    if (!mongoUri) {
+      throw new Error('MONGO_URI_ATLAS or MONGO_URI is missing from .env');
     }
 
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(mongoUri);
+
     console.log('MongoDB connected');
+    console.log('Database:', mongoose.connection.name);
+    console.log('Products collection:', Product.collection.name);
 
-    const vendor = await User.findOne().sort({ createdAt: 1 });
+    // Find an actual vendor account
+  // Inspect existing users first
+const users = await User.find({})
+  .select('name email role')
+  .lean();
 
-    if (!vendor) {
-      throw new Error('No users found. Register an account first.');
-    }
+console.log('Users found:', users);
 
-    let inserted = 0;
-    let updated = 0;
+// Find a vendor account (case-insensitive)
+const vendor = users.find(
+  user => String(user.role || '').toLowerCase() === 'vendor'
+);
 
+if (!vendor) {
+  throw new Error(
+    'No vendor account found. Check the Users found output above.'
+  );
+}
+
+let inserted = 0;
+let updated = 0;
     for (const product of products) {
       const result = await Product.updateOne(
-        { title: product.title, vendor: vendor._id },
-        {
-          $set: {
-            ...product,
-            vendor: vendor._id,
-          },
-          $setOnInsert: {
-            isHidden: false,
-          },
-        },
-        { upsert: true }
-      );
-
+  { title: product.title, vendor: vendor._id },
+  {
+    $set: {
+      ...product,
+      vendor: vendor._id,
+      isHidden: false,
+    },
+  },
+  { upsert: true }
+);
       if (result.upsertedCount > 0) {
         inserted++;
       } else if (result.modifiedCount > 0) {
